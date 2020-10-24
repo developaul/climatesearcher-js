@@ -1,0 +1,2 @@
+# Climate Searcher App: JavaScript
+
