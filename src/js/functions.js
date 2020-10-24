@@ -1,4 +1,4 @@
-import { cityInput, countryInput, ui } from './references.js';
+import { cityInput, countryInput, form, result, ui } from './references.js';
 
 // Functions
 // Valida el formulario
@@ -13,6 +13,7 @@ const validateForm = event => {
         return;
     }
 
+    form.reset();
     consultAPI( city, country );
 }
 
@@ -24,6 +25,8 @@ const consultAPI = ( city, country ) => {
     fetch( url )
         .then( response => response.json() )
         .then( data => {
+            limpiarHTML()
+
             if( data.cod === '404' ) {
                 ui.showError( 'Ciudad no encontrada' );
                 return;
@@ -33,6 +36,17 @@ const consultAPI = ( city, country ) => {
         })
 }
 
+// Limpia el HTML
+const limpiarHTML = () => {
+    while( result.firstChild ) { 
+        result.removeChild( result.firstChild ) 
+    };
+}
+
+// Convierte los grados kelvin a centigrados centrigados
+const kelvinToCentigrades = degrees => parseInt( degrees - 273.15 );
+
 export {
-    validateForm
+    validateForm,
+    kelvinToCentigrades
 }
