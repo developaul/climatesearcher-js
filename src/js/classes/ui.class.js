@@ -1,4 +1,5 @@
-import { container } from '../references.js';
+import { container, result } from '../references.js';
+import { kelvinToCentigrades } from '../functions.js';
 
 class UI{
 
@@ -20,7 +21,39 @@ class UI{
         }
     }
 
+    showClimate( data ) {
+        const { name, main: { temp, temp_max, temp_min } } = data;
+        
+        const centigrades   = kelvinToCentigrades( temp ),
+              max           = kelvinToCentigrades( temp_max ),
+              min           = kelvinToCentigrades( temp_min );    
 
+        const cityName = document.createElement( 'p' );
+        cityName.textContent = `Clima en ${ name }`;
+        cityName.classList.add( 'font-bold', 'text-2xl' );
+
+        const current = document.createElement( 'p' );
+        current.innerHTML = `${ centigrades } &#8451;`;
+        current.classList.add( 'font-bold', 'text-6xl' );
+
+        const tempMaxima = document.createElement( 'p' );
+        tempMaxima.innerHTML = `Max: ${ max } &#8451;`;
+        tempMaxima.classList.add( 'text-xl' );
+     
+        const tempMinima = document.createElement( 'p' );
+        tempMinima.innerHTML = `Min: ${ min } &#8451;`;
+        tempMinima.classList.add( 'text-xl' );
+
+
+        const resultDiv = document.createElement( 'div' );
+        resultDiv.classList.add( 'text-center', 'text-white' );
+        resultDiv.appendChild( cityName );
+        resultDiv.appendChild( current );
+        resultDiv.appendChild( tempMaxima );
+        resultDiv.appendChild( tempMinima );
+
+        result.appendChild( resultDiv );
+    }
 }
 
 export default UI;
